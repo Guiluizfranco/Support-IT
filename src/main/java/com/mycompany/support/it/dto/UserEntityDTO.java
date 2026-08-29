@@ -2,39 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.support.it.entity;
+package com.mycompany.support.it.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table (name = "usuarios")
-public class UserEntity {
+/**
+ *
+ * @author guil_dev
+ */
+public class UserEntityDTO {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    protected String nome;
+    protected String usuario;
+    protected String email;
+    protected String senha;
+    protected String departamento;
     
-    @Column
-    private String nome;
-    
-    @Column(unique = true)
-    private String usuario;
-    
-    @Column(unique = true)
-    private String email;
-    
-    @Column
-    private String senha;
-    
-    @Column
-    private String departamento;
-    
-    public String getNome(){
+     public String getNome(){
         return nome;
     }
     public void setNome(String nome){
@@ -68,6 +50,5 @@ public class UserEntity {
     public void setDepartamento(String departamento){
         this.departamento = departamento;
     }
-    
     
 }

@@ -1,2 +1,7 @@
 /home/guil_dev/NetBeansProjects/Support-IT/src/main/java/com/mycompany/support/it/SupportIT.java
+/home/guil_dev/NetBeansProjects/Support-IT/src/main/java/com/mycompany/support/it/controller/UserController.java
+/home/guil_dev/NetBeansProjects/Support-IT/src/main/java/com/mycompany/support/it/dto/UserEntityDTO.java
+/home/guil_dev/NetBeansProjects/Support-IT/src/main/java/com/mycompany/support/it/dto/UserResponseDTO.java
 /home/guil_dev/NetBeansProjects/Support-IT/src/main/java/com/mycompany/support/it/entity/UserEntity.java
+/home/guil_dev/NetBeansProjects/Support-IT/src/main/java/com/mycompany/support/it/repository/UserRepository.java
+/home/guil_dev/NetBeansProjects/Support-IT/src/main/java/com/mycompany/support/it/service/UserService.java
