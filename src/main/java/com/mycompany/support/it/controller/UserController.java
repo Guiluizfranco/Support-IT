@@ -6,7 +6,10 @@ package com.mycompany.support.it.controller;
 
 import com.mycompany.support.it.dto.UserEntityDTO;
 import com.mycompany.support.it.dto.UserResponseDTO;
+import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.service.UserService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,5 +33,10 @@ public class UserController {
    public UserResponseDTO CreateUser(@RequestBody UserEntityDTO dto){
        return service.CreateUser(dto);
    }
-    
+   
+   @GetMapping("/{id}")
+   public UserEntity FindUserById(@PathVariable Integer id){
+       return service.FindUserById(id);
+   }
+   
 }

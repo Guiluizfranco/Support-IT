@@ -42,4 +42,10 @@ public class UserService {
         
     }
     
+    public UserEntity FindUserById(Integer id){
+        
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        
+    }
+    
 }
