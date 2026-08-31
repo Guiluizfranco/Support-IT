@@ -8,6 +8,7 @@ import com.mycompany.support.it.dto.UserEntityDTO;
 import com.mycompany.support.it.dto.UserResponseDTO;
 import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.repository.UserRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 /**
@@ -45,6 +46,12 @@ public class UserService {
     public UserEntity FindUserById(Integer id){
         
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        
+    }
+    
+    public UserEntity FindUserByUsuario(String usuario){
+        
+        return repository.findByUsuario(usuario).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         
     }
     

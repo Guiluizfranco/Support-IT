@@ -5,6 +5,7 @@
 package com.mycompany.support.it.repository;
 
 import com.mycompany.support.it.entity.UserEntity;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -12,5 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author guil_dev
  */
 public interface UserRepository extends JpaRepository<UserEntity, Integer>{
+    
+    Optional<UserEntity> findByUsuario(String usuario);
     
 }
