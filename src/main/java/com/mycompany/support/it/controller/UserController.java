@@ -8,6 +8,7 @@ import com.mycompany.support.it.dto.UserEntityDTO;
 import com.mycompany.support.it.dto.UserResponseDTO;
 import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.service.UserService;
+import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,6 +46,13 @@ public class UserController {
            @RequestParam(required=false) String usuario){
        
        return service.FindUserByUsuario(usuario);
+       
+   }
+   
+   @GetMapping
+   public List<UserEntity> FindAllUsers(){
+       
+       return service.FindAllUsers();
        
    }
    
