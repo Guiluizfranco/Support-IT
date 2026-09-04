@@ -8,6 +8,7 @@ import com.mycompany.support.it.dto.UserEntityDTO;
 import com.mycompany.support.it.dto.UserResponseDTO;
 import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -60,6 +61,33 @@ public class UserService {
         
         return repository.findAll();
         
+    }
+    
+    @Transactional
+    public UserResponseDTO UpdateUserById(Integer id, UserEntityDTO dto){
+        
+        if (FindUserById(id).equals("Usuário não encontrado")){
+            
+            response.setMessage("Usuário não encontrado!");
+            
+        }else{
+            
+            UserEntity user = new UserEntity();
+            
+            user.setId(id);
+            user.setNome(dto.getNome());
+            user.setUsuario(dto.getUsuario());
+            user.setEmail(dto.getEmail());
+            user.setSenha(dto.getSenha());
+            user.setDepartamento(dto.getDepartamento());
+            
+            repository.save(user);
+            
+            response.setMessage("Usuário atualizado com sucesso!");
+            
+        }
+        
+        return response;
     }
     
 }
