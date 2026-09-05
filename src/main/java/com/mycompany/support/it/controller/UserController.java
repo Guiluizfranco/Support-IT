@@ -66,4 +66,13 @@ public class UserController {
        
    }
    
+   @PutMapping("/update")
+   public UserResponseDTO UpdateUserByUsuario(
+           @RequestParam String usuario,
+           @RequestBody UserEntityDTO dto){
+       
+      return service.UpdateUserByUsuario(usuario, dto);
+       
+   }
+   
 }

@@ -90,4 +90,32 @@ public class UserService {
         return response;
     }
     
+    @Transactional
+    public UserResponseDTO UpdateUserByUsuario(String usuario, UserEntityDTO dto){
+        
+        if(FindUserByUsuario(usuario).equals("Usuário não encontrado")){
+         
+            response.setMessage("Usuário não encontrado");
+            
+        }else{
+            
+            UserEntity user = new UserEntity();
+            
+            user.setId(FindUserByUsuario(usuario).getId());
+            user.setNome(dto.getNome());
+            user.setUsuario(dto.getUsuario());
+            user.setEmail(dto.getEmail());
+            user.setSenha(dto.getSenha());
+            user.setDepartamento(dto.getDepartamento());
+            
+            repository.save(user);
+            
+            response.setMessage("Usuário atualizado");
+            
+        }
+        
+        return response;
+        
+    }
+    
 }
