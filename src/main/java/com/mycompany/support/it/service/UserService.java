@@ -118,4 +118,22 @@ public class UserService {
         
     }
     
+    public UserResponseDTO DeleteUserById(Integer id){
+        
+        if(FindUserById(id).equals("Usuario não encontrado")){
+            
+            response.setMessage("Usuário não encontrado");
+            
+        }else{
+            
+            repository.deleteById(id);
+            
+            response.setMessage("Usuário deletado com sucesso");
+            
+        }
+        
+        return response;
+        
+    }
+    
 }

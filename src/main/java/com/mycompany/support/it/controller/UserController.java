@@ -9,6 +9,7 @@ import com.mycompany.support.it.dto.UserResponseDTO;
 import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.service.UserService;
 import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,6 +73,13 @@ public class UserController {
            @RequestBody UserEntityDTO dto){
        
       return service.UpdateUserByUsuario(usuario, dto);
+       
+   }
+   
+   @DeleteMapping("/{id}")
+   public UserResponseDTO DeleteUserById(@PathVariable Integer id){
+       
+       return service.DeleteUserById(id);
        
    }
    
