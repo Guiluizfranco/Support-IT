@@ -1,7 +1,13 @@
-com/mycompany/support/it/repository/UserRepository.class
 com/mycompany/support/it/dto/UserEntityDTO.class
-com/mycompany/support/it/dto/UserResponseDTO.class
+com/mycompany/support/it/controller/CallController.class
+com/mycompany/support/it/service/CallService.class
 com/mycompany/support/it/entity/UserEntity.class
+com/mycompany/support/it/service/UserService.class
+com/mycompany/support/it/entity/CallEntity.class
+com/mycompany/support/it/dto/CallEntityDTO.class
+com/mycompany/support/it/repository/UserRepository.class
+com/mycompany/support/it/dto/UserResponseDTO.class
+com/mycompany/support/it/repository/CallRepository.class
 com/mycompany/support/it/controller/UserController.class
 com/mycompany/support/it/SupportIT.class
-com/mycompany/support/it/service/UserService.class
+com/mycompany/support/it/dto/CallResponseDTO.class

@@ -10,7 +10,6 @@ import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 /**
