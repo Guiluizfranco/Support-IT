@@ -49,4 +49,18 @@ public class CallService {
         
     }
     
+    public CallResponseDTO AlterStatusCall(CallEntityDTO dto, int id){
+        
+        CallEntity call = callRepository.findById(id).get();
+        
+        call.setStatus(dto.getStatus());
+        
+        callRepository.save(call);
+        
+        response.setMessage("Status alterado com sucesso! O chamado está " + dto.getStatus());
+        
+        return response;
+        
+    }
+    
 }
