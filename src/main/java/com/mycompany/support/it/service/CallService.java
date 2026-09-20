@@ -10,6 +10,8 @@ import com.mycompany.support.it.entity.CallEntity;
 import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.repository.CallRepository;
 import com.mycompany.support.it.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -63,4 +65,23 @@ public class CallService {
         
     }
     
+    public List<CallEntity> GetAllCall(){
+        
+        return callRepository.findAll();
+  
+    }
+    
+    public List<CallEntity> GetAllUserCalls(Integer id){
+        
+        UserEntity user = userRepository.findById(id).get();
+        
+        return callRepository.findAllByUser(user);
+        
+    }
+    
+    public List<CallEntity> GetAllStatusCalls(String status){
+        
+        return callRepository.findAllByStatus(status);
+        
+    }
 }

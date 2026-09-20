@@ -6,12 +6,16 @@ package com.mycompany.support.it.controller;
 
 import com.mycompany.support.it.dto.CallEntityDTO;
 import com.mycompany.support.it.dto.CallResponseDTO;
+import com.mycompany.support.it.entity.CallEntity;
 import com.mycompany.support.it.service.CallService;
+import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -42,4 +46,18 @@ public class CallController {
         
     }
     
+    @GetMapping
+    public List<CallEntity> GetAllCalls(){
+        return service.GetAllCall();
+    }
+    
+    @GetMapping("/{id}")
+    public List<CallEntity> GetAllUserCalls(@PathVariable Integer id){
+        return service.GetAllUserCalls(id);
+    }
+    
+    @GetMapping("/search")
+    public List<CallEntity> GetAllStatusCalls(@RequestParam String status){
+        return service.GetAllStatusCalls(status);
+    }
 }

@@ -6,7 +6,7 @@ package com.mycompany.support.it.repository;
 
 import com.mycompany.support.it.entity.CallEntity;
 import com.mycompany.support.it.entity.UserEntity;
-import java.util.Optional;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -15,5 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CallRepository extends JpaRepository<CallEntity, Integer>{
     
-    
+    List<CallEntity> findAllByUser(UserEntity user);
+    List<CallEntity> findAllByStatus(String status);
 }
