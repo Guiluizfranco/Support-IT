@@ -45,6 +45,11 @@ public class CallEntity {
     @JoinColumn(name = "usuarioAberturaChamado")
     private UserEntity user;
     
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private CategoryEntity category;
+    
+    
     public String getTitulo(){
         return titulo;
     }
@@ -85,5 +90,12 @@ public class CallEntity {
     }
     public void setUserEntity(UserEntity user){
         this.user = user;
+    }
+    
+    public CategoryEntity getCategoryEntity(){
+        return category;
+    }
+    public void setCategoryEntity(CategoryEntity category){
+        this.category = category;
     }
 }

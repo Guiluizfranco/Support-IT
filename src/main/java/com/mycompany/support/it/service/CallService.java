@@ -7,10 +7,11 @@ package com.mycompany.support.it.service;
 import com.mycompany.support.it.dto.CallEntityDTO;
 import com.mycompany.support.it.dto.CallResponseDTO;
 import com.mycompany.support.it.entity.CallEntity;
+import com.mycompany.support.it.entity.CategoryEntity;
 import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.repository.CallRepository;
+import com.mycompany.support.it.repository.CategoryRepository;
 import com.mycompany.support.it.repository.UserRepository;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -23,17 +24,20 @@ public class CallService {
     
     private final CallRepository callRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
     
     CallResponseDTO response = new CallResponseDTO();
     
-    public CallService(CallRepository callRepository, UserRepository userRepository){
+    public CallService(CallRepository callRepository, UserRepository userRepository, CategoryRepository categoryRepository){
         this.callRepository = callRepository;
         this.userRepository = userRepository;
+        this.categoryRepository = categoryRepository;
     }
     
     public CallResponseDTO CreateCall(CallEntityDTO dto){
         
-        UserEntity user = userRepository.findById(dto.getId()).get();
+        UserEntity user = userRepository.findById(dto.getUserId()).get();
+        CategoryEntity category = categoryRepository.findById(dto.getCategoryId()).get();
         CallEntity call = new CallEntity();
         
         call.setTitulo(dto.getTitulo());
@@ -42,6 +46,7 @@ public class CallService {
         call.setDataAbertura(dto.getDataAbertura());
         call.setDataFechamento(dto.getDataFechamento());
         call.setUserEntity(user);
+        call.setCategoryEntity(category);
         
         callRepository.save(call);
         
