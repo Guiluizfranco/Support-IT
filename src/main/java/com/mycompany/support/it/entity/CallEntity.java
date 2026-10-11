@@ -49,6 +49,10 @@ public class CallEntity {
     @JoinColumn(name = "categoria_id")
     private CategoryEntity category;
     
+    @ManyToOne
+    @JoinColumn(name = "tecnico_id")
+    private TecnicoEntity tecnico;
+    
     
     public String getTitulo(){
         return titulo;
@@ -97,5 +101,12 @@ public class CallEntity {
     }
     public void setCategoryEntity(CategoryEntity category){
         this.category = category;
+    }
+    
+    public TecnicoEntity getTecnicoEntity(){
+        return tecnico;
+    }
+    public void setTecnicoEntity(TecnicoEntity tecnico){
+        this.tecnico = tecnico;
     }
 }

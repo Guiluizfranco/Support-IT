@@ -37,7 +37,7 @@ public class CallController {
         return service.CreateCall(dto);
     }
     
-    @PatchMapping("/{id}")
+    @PatchMapping("/status/{id}")
     public CallResponseDTO AlterStatusCall(
             @PathVariable int id,
             @RequestBody CallEntityDTO dto){
@@ -45,6 +45,16 @@ public class CallController {
         return service.AlterStatusCall(dto, id);
         
     }
+    
+    @PatchMapping("/tecnico/{id}")
+    public CallResponseDTO AlterTecnicoAssociateCall(
+            @PathVariable int id,
+            @RequestBody CallEntityDTO dto){
+        
+        return service.AlterTecnicoAssociateCall(dto, id);
+        
+    }
+    
     
     @GetMapping
     public List<CallEntity> GetAllCalls(){

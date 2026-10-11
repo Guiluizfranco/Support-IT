@@ -8,9 +8,11 @@ import com.mycompany.support.it.dto.CallEntityDTO;
 import com.mycompany.support.it.dto.CallResponseDTO;
 import com.mycompany.support.it.entity.CallEntity;
 import com.mycompany.support.it.entity.CategoryEntity;
+import com.mycompany.support.it.entity.TecnicoEntity;
 import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.repository.CallRepository;
 import com.mycompany.support.it.repository.CategoryRepository;
+import com.mycompany.support.it.repository.TecnicoRepository;
 import com.mycompany.support.it.repository.UserRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -25,13 +27,20 @@ public class CallService {
     private final CallRepository callRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
+    private final TecnicoRepository tecnicoRepository;
     
     CallResponseDTO response = new CallResponseDTO();
     
-    public CallService(CallRepository callRepository, UserRepository userRepository, CategoryRepository categoryRepository){
+    public CallService(
+            CallRepository callRepository, 
+            UserRepository userRepository, 
+            CategoryRepository categoryRepository,
+            TecnicoRepository tecnicoRepository){
+        
         this.callRepository = callRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
+        this.tecnicoRepository = tecnicoRepository;
     }
     
     public CallResponseDTO CreateCall(CallEntityDTO dto){
@@ -67,6 +76,23 @@ public class CallService {
         response.setMessage("Status alterado com sucesso! O chamado está " + dto.getStatus());
         
         return response;
+        
+    }
+    
+    public CallResponseDTO AlterTecnicoAssociateCall(CallEntityDTO dto, int id){
+        
+        CallEntity call = callRepository.findById(id).get();
+        
+        TecnicoEntity tecnico = tecnicoRepository.findById(dto.getTecnicoId()).get();
+        
+        call.setTecnicoEntity(tecnico);
+        
+        callRepository.save(call);
+        
+        response.setMessage("Técnico vinculado com sucesso");
+        
+        return response;
+        
         
     }
     

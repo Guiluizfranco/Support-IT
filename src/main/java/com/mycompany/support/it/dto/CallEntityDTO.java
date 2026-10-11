@@ -19,7 +19,8 @@ public class CallEntityDTO {
     private LocalDate dataAbertura;
     private LocalDate dataFechamento;
     private int userId;
-    private int categoryId;
+    private Integer categoryId;
+    private Integer tecnicoId;
     
     public String getTitulo(){
         return titulo;
@@ -59,16 +60,24 @@ public class CallEntityDTO {
     public Integer getUserId(){
         return userId;
     }
-    public void setUserId(int userId){
+    public void setUserId(Integer userId){
         this.userId = userId;
     }
     
-    public Integer getCategoryId(){
+    public int getCategoryId(){
         return categoryId;
     }
-    public void setCatogoryId(int categoryId){
+    public void setCatogoryId(Integer categoryId){
         this.categoryId = categoryId;
     }
+    
+    public Integer getTecnicoId(){
+        return tecnicoId;
+    }
+    public void setTecnicoId(Integer tecnicoId){
+        this.tecnicoId = tecnicoId;
+    }
+        
     
 }
 
