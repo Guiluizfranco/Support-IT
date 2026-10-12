@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table (name = "usuarios")
@@ -36,6 +37,10 @@ public class UserEntity {
     private String departamento;
     
     @OneToMany(mappedBy = "user")
+    private List<CallEntity> listCall;
+    
+    @OneToMany(mappedBy = "user")
+    private List<CommentEntity> listComment;
     
     public Integer getId(){
         return id;
