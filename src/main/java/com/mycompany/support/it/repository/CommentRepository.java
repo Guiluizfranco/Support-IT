@@ -4,7 +4,9 @@
  */
 package com.mycompany.support.it.repository;
 
+import com.mycompany.support.it.entity.CallEntity;
 import com.mycompany.support.it.entity.CommentEntity;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,5 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 
 public interface CommentRepository extends JpaRepository<CommentEntity, Integer> {
+ 
+    List <CommentEntity> findAllByCall(CallEntity call);
     
 }

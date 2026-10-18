@@ -7,6 +7,9 @@ package com.mycompany.support.it.controller;
 import com.mycompany.support.it.dto.CommentDTO;
 import com.mycompany.support.it.dto.ResponseDTO;
 import com.mycompany.support.it.service.CommentService;
+import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,4 +36,16 @@ public class CommentController {
         
     }
     
+    @GetMapping
+    public List SelectAllComment(){
+        
+        return service.SelectAllComments();
+    }
+    
+    @GetMapping("/{id}")
+    public List SelectAllByCall(@PathVariable int id){
+        
+        return service.SelectCommentsByCall(id);
+        
+    }
 }

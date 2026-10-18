@@ -12,6 +12,8 @@ import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.repository.CallRepository;
 import com.mycompany.support.it.repository.CommentRepository;
 import com.mycompany.support.it.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -51,4 +53,17 @@ public class CommentService {
         return response;
     }
     
+    public List SelectAllComments(){
+        
+        return commentRepository.findAll();
+
+    }
+    
+    public List SelectCommentsByCall(int id){
+        
+        CallEntity call = callRepository.findById(id).get();
+        
+        return commentRepository.findAllByCall(call);
+        
+    }    
 }
