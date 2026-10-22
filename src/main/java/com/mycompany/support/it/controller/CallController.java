@@ -5,7 +5,7 @@
 package com.mycompany.support.it.controller;
 
 import com.mycompany.support.it.dto.CallEntityDTO;
-import com.mycompany.support.it.dto.CallResponseDTO;
+import com.mycompany.support.it.dto.ResponseDTO;
 import com.mycompany.support.it.entity.CallEntity;
 import com.mycompany.support.it.service.CallService;
 import java.util.List;
@@ -33,12 +33,12 @@ public class CallController {
     }
     
     @PostMapping
-    public CallResponseDTO CreateCall(@RequestBody CallEntityDTO dto){
+    public ResponseDTO CreateCall(@RequestBody CallEntityDTO dto){
         return service.CreateCall(dto);
     }
     
     @PatchMapping("/status/{id}")
-    public CallResponseDTO AlterStatusCall(
+    public ResponseDTO AlterStatusCall(
             @PathVariable int id,
             @RequestBody CallEntityDTO dto){
         
@@ -47,7 +47,7 @@ public class CallController {
     }
     
     @PatchMapping("/tecnico/{id}")
-    public CallResponseDTO AlterTecnicoAssociateCall(
+    public ResponseDTO AlterTecnicoAssociateCall(
             @PathVariable int id,
             @RequestBody CallEntityDTO dto){
         

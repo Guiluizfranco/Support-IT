@@ -11,7 +11,6 @@ com/mycompany/support/it/entity/TecnicoEntity.class
 com/mycompany/support/it/repository/CallRepository.class
 com/mycompany/support/it/entity/CommentEntity.class
 com/mycompany/support/it/dto/CommentDTO.class
-com/mycompany/support/it/dto/CallResponseDTO.class
 com/mycompany/support/it/repository/CategoryRepository.class
 com/mycompany/support/it/controller/CommentController.class
 com/mycompany/support/it/service/TecnicoService.class
@@ -20,7 +19,6 @@ com/mycompany/support/it/dto/TecnicoEntityDTO.class
 com/mycompany/support/it/dto/ResponseDTO.class
 com/mycompany/support/it/repository/TecnicoRepository.class
 com/mycompany/support/it/service/UserService.class
-com/mycompany/support/it/dto/UserResponseDTO.class
 com/mycompany/support/it/repository/CommentRepository.class
 com/mycompany/support/it/controller/UserController.class
 com/mycompany/support/it/SupportIT.class

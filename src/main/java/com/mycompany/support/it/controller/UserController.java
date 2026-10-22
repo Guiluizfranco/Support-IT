@@ -4,8 +4,8 @@
  */
 package com.mycompany.support.it.controller;
 
+import com.mycompany.support.it.dto.ResponseDTO;
 import com.mycompany.support.it.dto.UserEntityDTO;
-import com.mycompany.support.it.dto.UserResponseDTO;
 import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.service.UserService;
 import java.util.List;
@@ -34,7 +34,7 @@ public class UserController {
     }
    
    @PostMapping 
-   public UserResponseDTO CreateUser(@RequestBody UserEntityDTO dto){
+   public ResponseDTO CreateUser(@RequestBody UserEntityDTO dto){
        return service.CreateUser(dto);
    }
    
@@ -59,7 +59,7 @@ public class UserController {
    }
    
    @PutMapping("/{id}")
-   public UserResponseDTO UpdateUserById(
+   public ResponseDTO UpdateUserById(
            @RequestBody UserEntityDTO dto,
            @PathVariable Integer id){
        
@@ -68,7 +68,7 @@ public class UserController {
    }
    
    @PutMapping("/update")
-   public UserResponseDTO UpdateUserByUsuario(
+   public ResponseDTO UpdateUserByUsuario(
            @RequestParam String usuario,
            @RequestBody UserEntityDTO dto){
        
@@ -77,7 +77,7 @@ public class UserController {
    }
    
    @DeleteMapping("/{id}")
-   public UserResponseDTO DeleteUserById(@PathVariable Integer id){
+   public ResponseDTO DeleteUserById(@PathVariable Integer id){
        
        return service.DeleteUserById(id);
        

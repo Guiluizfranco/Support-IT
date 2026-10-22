@@ -66,4 +66,17 @@ public class CommentService {
         return commentRepository.findAllByCall(call);
         
     }    
+    
+    public ResponseDTO AlterTextComment(int id, CommentDTO dto){
+        
+        CommentEntity comment = commentRepository.findById(id).get();
+        
+        comment.setTexto(dto.getTexto());
+        commentRepository.save(comment);
+        
+        response.setMessage("Comentario alterado com sucesso");
+        
+        return response;
+        
+    }
 }

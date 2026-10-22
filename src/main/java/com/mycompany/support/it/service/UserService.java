@@ -4,8 +4,8 @@
  */
 package com.mycompany.support.it.service;
 
+import com.mycompany.support.it.dto.ResponseDTO;
 import com.mycompany.support.it.dto.UserEntityDTO;
-import com.mycompany.support.it.dto.UserResponseDTO;
 import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -20,13 +20,13 @@ import org.springframework.stereotype.Service;
 public class UserService {
     
     private final UserRepository repository;
-    UserResponseDTO response = new UserResponseDTO();
+    ResponseDTO response = new ResponseDTO();
     
     public UserService(UserRepository repostiory){
         this.repository = repostiory;
     }
     
-    public UserResponseDTO CreateUser(UserEntityDTO dto){
+    public ResponseDTO CreateUser(UserEntityDTO dto){
         
         UserEntity user = new UserEntity();
         
@@ -63,7 +63,7 @@ public class UserService {
     }
     
     @Transactional
-    public UserResponseDTO UpdateUserById(Integer id, UserEntityDTO dto){
+    public ResponseDTO UpdateUserById(Integer id, UserEntityDTO dto){
         
         if (FindUserById(id).equals("Usuário não encontrado")){
             
@@ -90,7 +90,7 @@ public class UserService {
     }
     
     @Transactional
-    public UserResponseDTO UpdateUserByUsuario(String usuario, UserEntityDTO dto){
+    public ResponseDTO UpdateUserByUsuario(String usuario, UserEntityDTO dto){
         
         if(FindUserByUsuario(usuario).equals("Usuário não encontrado")){
          
@@ -117,7 +117,7 @@ public class UserService {
         
     }
     
-    public UserResponseDTO DeleteUserById(Integer id){
+    public ResponseDTO DeleteUserById(Integer id){
         
         if(FindUserById(id).equals("Usuario não encontrado")){
             

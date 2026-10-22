@@ -9,6 +9,7 @@ import com.mycompany.support.it.dto.ResponseDTO;
 import com.mycompany.support.it.service.CommentService;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,6 +47,15 @@ public class CommentController {
     public List SelectAllByCall(@PathVariable int id){
         
         return service.SelectCommentsByCall(id);
+        
+    }
+    
+    @PatchMapping("/{id}")
+    public ResponseDTO AlterTextComment(
+            @PathVariable int id,
+            @RequestBody CommentDTO dto){
+        
+        return service.AlterTextComment(id, dto);
         
     }
 }

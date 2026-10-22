@@ -5,7 +5,7 @@
 package com.mycompany.support.it.service;
 
 import com.mycompany.support.it.dto.CallEntityDTO;
-import com.mycompany.support.it.dto.CallResponseDTO;
+import com.mycompany.support.it.dto.ResponseDTO;
 import com.mycompany.support.it.entity.CallEntity;
 import com.mycompany.support.it.entity.CategoryEntity;
 import com.mycompany.support.it.entity.TecnicoEntity;
@@ -29,7 +29,7 @@ public class CallService {
     private final CategoryRepository categoryRepository;
     private final TecnicoRepository tecnicoRepository;
     
-    CallResponseDTO response = new CallResponseDTO();
+    ResponseDTO response = new ResponseDTO();
     
     public CallService(
             CallRepository callRepository, 
@@ -43,7 +43,7 @@ public class CallService {
         this.tecnicoRepository = tecnicoRepository;
     }
     
-    public CallResponseDTO CreateCall(CallEntityDTO dto){
+    public ResponseDTO CreateCall(CallEntityDTO dto){
         
         UserEntity user = userRepository.findById(dto.getUserId()).get();
         CategoryEntity category = categoryRepository.findById(dto.getCategoryId()).get();
@@ -65,7 +65,7 @@ public class CallService {
         
     }
     
-    public CallResponseDTO AlterStatusCall(CallEntityDTO dto, int id){
+    public ResponseDTO AlterStatusCall(CallEntityDTO dto, int id){
         
         CallEntity call = callRepository.findById(id).get();
         
@@ -79,7 +79,7 @@ public class CallService {
         
     }
     
-    public CallResponseDTO AlterTecnicoAssociateCall(CallEntityDTO dto, int id){
+    public ResponseDTO AlterTecnicoAssociateCall(CallEntityDTO dto, int id){
         
         CallEntity call = callRepository.findById(id).get();
         
