@@ -14,6 +14,7 @@ import com.mycompany.support.it.repository.CallRepository;
 import com.mycompany.support.it.repository.CategoryRepository;
 import com.mycompany.support.it.repository.TecnicoRepository;
 import com.mycompany.support.it.repository.UserRepository;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -43,16 +44,21 @@ public class CallService {
         this.tecnicoRepository = tecnicoRepository;
     }
     
+    LocalDate today = LocalDate.now();
+    
     public ResponseDTO CreateCall(CallEntityDTO dto){
+        
+        CallEntity call = new CallEntity();
+        
         
         UserEntity user = userRepository.findById(dto.getUserId()).get();
         CategoryEntity category = categoryRepository.findById(dto.getCategoryId()).get();
-        CallEntity call = new CallEntity();
         
+   
         call.setTitulo(dto.getTitulo());
         call.setDescricao(dto.getDescricao());
-        call.setStatus(dto.getStatus());
-        call.setDataAbertura(dto.getDataAbertura());
+        call.setStatus("Aberto");
+        call.setDataAbertura(today);
         call.setDataFechamento(dto.getDataFechamento());
         call.setUserEntity(user);
         call.setCategoryEntity(category);
@@ -69,14 +75,50 @@ public class CallService {
         
         CallEntity call = callRepository.findById(id).get();
         
-        call.setStatus(dto.getStatus());
+        if(dto.getStatus().equals("Fechado")){
+            
+         call.setStatus(dto.getStatus());
+         call.setDataFechamento(today);
         
-        callRepository.save(call);
+         callRepository.save(call);
+         
+         response.setMessage("Status alterado com sucesso! O chamado está " + dto.getStatus());
         
-        response.setMessage("Status alterado com sucesso! O chamado está " + dto.getStatus());
+         return response;
+         
+        }else if(dto.getStatus().equals("Aberto")){ 
+            
+         call.setStatus(dto.getStatus()); 
+         call.setDataFechamento(null);
+         
+         callRepository.save(call);
+         
+         response.setMessage("Status alterado com sucesso! O chamado está " + dto.getStatus());
         
-        return response;
+         return response;
+            
+        }else if(dto.getStatus().equals("Em andamento")){
+         
+            if(call.getTecnicoEntity() == null){
+                
+               response.setMessage("Não é possível alterar o status para 'Em Andamento', pois o chamado necessita de um técnico");
         
+               
+                
+            }else{
+                
+               call.setStatus(dto.getStatus()); 
+         
+               callRepository.save(call);
+         
+               response.setMessage("Status alterado com sucesso! O chamado está " + dto.getStatus());
+        
+               
+                
+            } 
+        }
+        
+        return response;      
     }
     
     public ResponseDTO AlterTecnicoAssociateCall(CallEntityDTO dto, int id){
@@ -85,6 +127,8 @@ public class CallService {
         
         TecnicoEntity tecnico = tecnicoRepository.findById(dto.getTecnicoId()).get();
         
+        if(tecnico.getAtivo()){
+        
         call.setTecnicoEntity(tecnico);
         
         callRepository.save(call);
@@ -92,6 +136,13 @@ public class CallService {
         response.setMessage("Técnico vinculado com sucesso");
         
         return response;
+        
+        }else{
+            
+         response.setMessage("Não foi possível vincular tecnico ao chamado pois o tecnico está inativo");
+         return response;
+            
+        }
         
         
     }

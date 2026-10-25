@@ -16,7 +16,6 @@ public class CallEntityDTO {
     private String titulo;
     private String descricao;
     private String status;
-    private LocalDate dataAbertura;
     private LocalDate dataFechamento;
     private int userId;
     private Integer categoryId;
@@ -41,13 +40,6 @@ public class CallEntityDTO {
     }
     public void setStatus(String status){
         this.status = status;
-    }
-    
-    public LocalDate getDataAbertura(){
-        return dataAbertura;
-    }
-    public void setDataAbertura(LocalDate dataAbertura){
-        this.dataAbertura = dataAbertura;
     }
     
     public LocalDate getDataFechamento(){

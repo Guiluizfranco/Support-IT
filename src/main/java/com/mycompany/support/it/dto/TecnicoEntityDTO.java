@@ -19,7 +19,7 @@ public class TecnicoEntityDTO {
    
     private String especialidade;
         
-    
+    private String status;
     
     public String getNome(){
         return nome;
@@ -40,6 +40,13 @@ public class TecnicoEntityDTO {
     }
     public void setEspecialidade(String especialidade){
         this.especialidade = especialidade;
+    }
+    
+    public String getStatus(){
+        return status;
+    }
+    public void setStatus(String status){
+        this.status = status;
     }
     
    

@@ -33,6 +33,9 @@ public class TecnicoEntity {
     @Column
     private String especialidade;
     
+    @Column
+    private boolean ativo;
+    
     @OneToMany(mappedBy = "tecnico")
     
     public Integer getId(){
@@ -61,6 +64,14 @@ public class TecnicoEntity {
     }
     public void setEspecialidade(String especialidade){
         this.especialidade = especialidade;
+    }
+    
+    public boolean getAtivo(){
+        return ativo;
+    }
+    
+    public void setAtivo(boolean ativo){
+        this.ativo = ativo;
     }
     
 }

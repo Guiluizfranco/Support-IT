@@ -10,6 +10,7 @@ import com.mycompany.support.it.entity.CallEntity;
 import com.mycompany.support.it.entity.TecnicoEntity;
 import com.mycompany.support.it.repository.CallRepository;
 import com.mycompany.support.it.repository.TecnicoRepository;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,7 @@ public class TecnicoService {
         tecnico.setNome(dto.getNome()); 
         tecnico.setEmail(dto.getEmail());
         tecnico.setEspecialidade(dto.getEspecialidade());
+        tecnico.setAtivo(true);
         
         tecnicoRepository.save(tecnico);
         
@@ -45,7 +47,7 @@ public class TecnicoService {
         return response;
     }
           
-   public ResponseDTO AlterEspecialidade (int id, TecnicoEntityDTO dto){
+   public ResponseDTO AlterSpeciality (int id, TecnicoEntityDTO dto){
        
        TecnicoEntity tecnico = tecnicoRepository.findById(id).get();
        
@@ -86,6 +88,25 @@ public class TecnicoService {
        
        response.setMessage("Tecnico excluído com sucesso");
        return response;
+       
+   }
+   
+   public ResponseDTO AlterStatusTecnico(int id, String status){
+       
+       TecnicoEntity tecnico = tecnicoRepository.findById(id).get();
+       
+       tecnico.setAtivo(!tecnico.getAtivo());
+       tecnicoRepository.save(tecnico);
+       
+       response.setMessage("Status alterado com sucesso.");
+       return response;
+       
+       
+   }
+   
+   public List SelectAllTecnico(){       
+       
+       return tecnicoRepository.findAll();
        
    }
     
