@@ -51,8 +51,9 @@ public class CallService {
         CallEntity call = new CallEntity();
         
         
-        UserEntity user = userRepository.findById(dto.getUserId()).get();
-        CategoryEntity category = categoryRepository.findById(dto.getCategoryId()).get();
+        UserEntity user = userRepository.findById(dto.getUserId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        
+        CategoryEntity category = categoryRepository.findById(dto.getCategoryId()).orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
         
    
         call.setTitulo(dto.getTitulo());

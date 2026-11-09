@@ -9,8 +9,8 @@ com/mycompany/support/it/entity/CategoryEntity.class
 com/mycompany/support/it/service/CommentService.class
 com/mycompany/support/it/entity/TecnicoEntity.class
 com/mycompany/support/it/repository/CallRepository.class
-com/mycompany/support/it/entity/CommentEntity.class
 com/mycompany/support/it/dto/CommentDTO.class
+com/mycompany/support/it/entity/CommentEntity.class
 com/mycompany/support/it/repository/CategoryRepository.class
 com/mycompany/support/it/controller/CommentController.class
 com/mycompany/support/it/service/TecnicoService.class

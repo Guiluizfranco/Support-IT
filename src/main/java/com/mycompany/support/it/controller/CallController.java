@@ -8,7 +8,9 @@ import com.mycompany.support.it.dto.CallEntityDTO;
 import com.mycompany.support.it.dto.ResponseDTO;
 import com.mycompany.support.it.entity.CallEntity;
 import com.mycompany.support.it.service.CallService;
+import jakarta.validation.Valid;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,8 +35,8 @@ public class CallController {
     }
     
     @PostMapping
-    public ResponseDTO CreateCall(@RequestBody CallEntityDTO dto){
-        return service.CreateCall(dto);
+    public ResponseEntity<?> CreateCall(@Valid @RequestBody CallEntityDTO dto){
+        return ResponseEntity.ok(service.CreateCall(dto));
     }
     
     @PatchMapping("/status/{id}")

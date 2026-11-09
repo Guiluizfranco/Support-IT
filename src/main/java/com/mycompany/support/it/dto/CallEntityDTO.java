@@ -4,20 +4,28 @@
  */
 package com.mycompany.support.it.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
-
 /**
  *
  * @author guil_dev
  */
 public class CallEntityDTO {
     
-    
+    @NotBlank(message = "É nescessário inserir um título para o chamado")
     private String titulo;
+    
+    @NotBlank(message = "É nescessário inserir uma descrição para o chamado")
     private String descricao;
+   
     private String status;
     private LocalDate dataFechamento;
-    private int userId;
+    
+    @NotNull(message = "É necessário vincular um usuário ao chamado")
+    private Integer userId;
+    
+    @NotNull(message = "É necessário inserir uma categoria")
     private Integer categoryId;
     private Integer tecnicoId;
     
