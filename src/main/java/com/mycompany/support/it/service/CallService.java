@@ -16,6 +16,7 @@ import com.mycompany.support.it.repository.TecnicoRepository;
 import com.mycompany.support.it.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -51,9 +52,9 @@ public class CallService {
         CallEntity call = new CallEntity();
         
         
-        UserEntity user = userRepository.findById(dto.getUserId()).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        UserEntity user = userRepository.findById(dto.getUserId()).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado"));
         
-        CategoryEntity category = categoryRepository.findById(dto.getCategoryId()).orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+        CategoryEntity category = categoryRepository.findById(dto.getCategoryId()).orElseThrow(() -> new NoSuchElementException("Categoria não encontrada"));
         
    
         call.setTitulo(dto.getTitulo());
@@ -74,59 +75,72 @@ public class CallService {
     
     public ResponseDTO AlterStatusCall(CallEntityDTO dto, int id){
         
-        CallEntity call = callRepository.findById(id).get();
+        CallEntity call = callRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Chamada não encontrada"));
         
-        if(dto.getStatus().equals("Fechado")){
+        if(!dto.getStatus().equals(call.getStatus())){
+        
+            switch(dto.getStatus().toLowerCase()){
+                
+                case "aberto":
+                    
+                    call.setStatus(dto.getStatus());
+                    call.setDataFechamento(today);
+        
+                    callRepository.save(call);
+         
+                    response.setMessage("Status alterado com sucesso! O chamado está " + dto.getStatus());
+                    
+                    break;
+                    
+                
+                case "fechado":
+                    
+                    call.setStatus(dto.getStatus()); 
+                    call.setDataFechamento(null);
+         
+                    callRepository.save(call);
+         
+                    response.setMessage("Status alterado com sucesso! O chamado está " + dto.getStatus());
+                    
+                    break;
+                    
+                case "em andamento":
+                    
+                     if(call.getTecnicoEntity() == null){
+                
+                       response.setMessage("Não é possível alterar o status para 'Em Andamento', pois o chamado necessita de um técnico");
+
+                     }else{
+                
+                       call.setStatus(dto.getStatus()); 
+         
+                       callRepository.save(call);
+         
+                       response.setMessage("Status alterado com sucesso! O chamado está " + dto.getStatus());        
+                    } 
+                    
+                    break;
+                    
+                default:
+                    
+                    response.setMessage("Status inválido! Escolha Aberto, Fechado ou Em andamento");     
+
+           }
             
-         call.setStatus(dto.getStatus());
-         call.setDataFechamento(today);
-        
-         callRepository.save(call);
-         
-         response.setMessage("Status alterado com sucesso! O chamado está " + dto.getStatus());
-        
-         return response;
-         
-        }else if(dto.getStatus().equals("Aberto")){ 
+        }else{
             
-         call.setStatus(dto.getStatus()); 
-         call.setDataFechamento(null);
-         
-         callRepository.save(call);
-         
-         response.setMessage("Status alterado com sucesso! O chamado está " + dto.getStatus());
-        
-         return response;
+               response.setMessage("Chamada já se encontra com esse status");
             
-        }else if(dto.getStatus().equals("Em andamento")){
-         
-            if(call.getTecnicoEntity() == null){
-                
-               response.setMessage("Não é possível alterar o status para 'Em Andamento', pois o chamado necessita de um técnico");
-        
-               
-                
-            }else{
-                
-               call.setStatus(dto.getStatus()); 
-         
-               callRepository.save(call);
-         
-               response.setMessage("Status alterado com sucesso! O chamado está " + dto.getStatus());
-        
-               
-                
-            } 
         }
-        
+
         return response;      
     }
     
     public ResponseDTO AlterTecnicoAssociateCall(CallEntityDTO dto, int id){
         
-        CallEntity call = callRepository.findById(id).get();
+        CallEntity call = callRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Chamada não encontrada"));
         
-        TecnicoEntity tecnico = tecnicoRepository.findById(dto.getTecnicoId()).get();
+        TecnicoEntity tecnico = tecnicoRepository.findById(dto.getTecnicoId()).orElseThrow(() -> new NoSuchElementException("Técnico não encontrado"));
         
         if(tecnico.getAtivo()){
         
@@ -140,7 +154,7 @@ public class CallService {
         
         }else{
             
-         response.setMessage("Não foi possível vincular tecnico ao chamado pois o tecnico está inativo");
+         response.setMessage("Não foi possível vincular tecnico ao chamado, pois o tecnico está inativo");
          return response;
             
         }
@@ -156,15 +170,23 @@ public class CallService {
     
     public List<CallEntity> GetAllUserCalls(Integer id){
         
-        UserEntity user = userRepository.findById(id).get();
+        UserEntity user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado"));
         
         return callRepository.findAllByUser(user);
         
     }
     
     public List<CallEntity> GetAllStatusCalls(String status){
-        
-        return callRepository.findAllByStatus(status);
-        
+
+        if(!status.toLowerCase().equals("aberto") || !status.toLowerCase().equals("fechado") || !status.toLowerCase().equals("em andamento")){
+            
+            throw new Error("Status inválido!");
+            
+        }else{
+            
+            return callRepository.findAllByStatus(status);
+            
+        }
+                
     }
 }
