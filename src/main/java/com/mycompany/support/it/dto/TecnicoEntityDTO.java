@@ -4,6 +4,10 @@
  */
 package com.mycompany.support.it.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 
 /**
  *
@@ -12,11 +16,15 @@ package com.mycompany.support.it.dto;
 public class TecnicoEntityDTO {
     
    
-    
+  
+    @NotBlank(message = "É necessário inserir o nome")
     private String nome;
     
+    @NotBlank(message = "É necessário inserir o email")
+    @Email(message = "Email inválido")
     private String email;
    
+    @NotBlank(message = "É necessário inserir a especialidade")
     private String especialidade;
         
     private String status;

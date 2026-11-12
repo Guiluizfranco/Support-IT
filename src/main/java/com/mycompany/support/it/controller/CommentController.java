@@ -7,7 +7,9 @@ package com.mycompany.support.it.controller;
 import com.mycompany.support.it.dto.CommentDTO;
 import com.mycompany.support.it.dto.ResponseDTO;
 import com.mycompany.support.it.service.CommentService;
+import jakarta.validation.Valid;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,9 +33,9 @@ public class CommentController {
     }
     
     @PostMapping
-    public ResponseDTO CreateComment(@RequestBody CommentDTO dto){
+    public ResponseEntity<?> CreateComment(@Valid @RequestBody CommentDTO dto){
         
-        return service.CreateComment(dto);
+        return ResponseEntity.ok(service.CreateComment(dto));
         
     }
     

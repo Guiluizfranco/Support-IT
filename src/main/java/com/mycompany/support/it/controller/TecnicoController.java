@@ -8,7 +8,9 @@ import com.mycompany.support.it.dto.ResponseDTO;
 import com.mycompany.support.it.dto.TecnicoEntityDTO;
 import com.mycompany.support.it.entity.TecnicoEntity;
 import com.mycompany.support.it.service.TecnicoService;
+import jakarta.validation.Valid;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -33,8 +35,8 @@ public class TecnicoController {
     }
     
     @PostMapping
-    public ResponseDTO CreateTecnico(@RequestBody TecnicoEntityDTO dto){
-        return service.CreateTecnico(dto);
+    public ResponseEntity<?> CreateTecnico(@Valid @RequestBody TecnicoEntityDTO dto){
+        return ResponseEntity.ok( service.CreateTecnico(dto));
         
     }
     

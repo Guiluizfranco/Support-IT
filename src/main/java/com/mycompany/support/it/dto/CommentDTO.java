@@ -4,6 +4,9 @@
  */
 package com.mycompany.support.it.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 /**
@@ -12,11 +15,18 @@ import java.time.LocalDate;
  */
 public class CommentDTO {
     
-
+    
     private int id;
+    
+    @NotBlank(message = "É necessário inserir um texto")
+    @Size(min=1, max=500)
     private String texto;
     private LocalDate data;
+    
+    @NotNull(message = "É necessário vincular o comentario a um usuario")
     private Integer userId;
+    
+    @NotNull(message = "É necessário vincular o comentario a uma chamada")
     private Integer callId;
     
     public int getId(){
@@ -40,17 +50,17 @@ public class CommentDTO {
         this.data = data;
     }
     
-    public Integer getUser(){
+    public Integer getUserId(){
         return userId;
     }
-    public void setUser(Integer userId){
+    public void setUserId(Integer userId){
         this.userId = userId;
     }
     
-    public Integer getCall(){
+    public Integer getCallId(){
         return callId;
     }
-    public void setCall(Integer callId){
+    public void setCallId(Integer callId){
         this.callId = callId; 
     }
     

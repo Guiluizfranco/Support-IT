@@ -12,8 +12,9 @@ import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.repository.CallRepository;
 import com.mycompany.support.it.repository.CommentRepository;
 import com.mycompany.support.it.repository.UserRepository;
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,22 +36,34 @@ public class CommentService {
     
     ResponseDTO response = new ResponseDTO();
     
+    LocalDate today = LocalDate.now();
+    
     public ResponseDTO CreateComment(CommentDTO dto){
         
         CommentEntity comment = new CommentEntity();
         
-        CallEntity call = callRepository.findById(dto.getCall()).get();
-        UserEntity user = userRepository.findById(dto.getUser()).get();
+        CallEntity call = callRepository.findById(dto.getCallId()).orElseThrow(() -> new NoSuchElementException("Chamada não encontada"));
+        UserEntity user = userRepository.findById(dto.getUserId()).orElseThrow(() -> new NoSuchElementException("Usuário não encontado"));
         
-        comment.setTexto(dto.getTexto());
-        comment.setLocalDate(dto.getData());
-        comment.setUser(user);
-        comment.setCall(call);
+        if(call.getDataFechamento() == null){
+            
+          comment.setTexto(dto.getTexto());
+          comment.setLocalDate(today);
+          comment.setUser(user);
+          comment.setCall(call);
         
-        commentRepository.save(comment);
+          commentRepository.save(comment);
+           
+          response.setMessage("Comentário inserido!");
+            
+        }else{
+            
+          response.setMessage("Não é possível incluir comentário, pois o chamado se encontra fechado!");
+
+        }
         
-        response.setMessage("Comentário inserido!");
         return response;
+
     }
     
     public List SelectAllComments(){
@@ -69,7 +82,7 @@ public class CommentService {
     
     public ResponseDTO AlterTextComment(int id, CommentDTO dto){
         
-        CommentEntity comment = commentRepository.findById(id).get();
+        CommentEntity comment = commentRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Comentario não encontrado"));
         
         comment.setTexto(dto.getTexto());
         commentRepository.save(comment);

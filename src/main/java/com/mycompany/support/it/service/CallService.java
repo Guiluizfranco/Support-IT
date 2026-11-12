@@ -84,7 +84,7 @@ public class CallService {
                 case "aberto":
                     
                     call.setStatus(dto.getStatus());
-                    call.setDataFechamento(today);
+                    call.setDataFechamento(null);
         
                     callRepository.save(call);
          
@@ -96,7 +96,7 @@ public class CallService {
                 case "fechado":
                     
                     call.setStatus(dto.getStatus()); 
-                    call.setDataFechamento(null);
+                    call.setDataFechamento(today);
          
                     callRepository.save(call);
          
