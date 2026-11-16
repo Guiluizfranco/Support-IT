@@ -41,12 +41,12 @@ public class TecnicoController {
     }
     
     @PatchMapping("/{id}")
-    public ResponseDTO AlterSpeciality(
+    public ResponseEntity<?> AlterSpeciality(
             @PathVariable int id,
-            @RequestBody TecnicoEntityDTO dto){
+            @Valid @RequestBody TecnicoEntityDTO dto){
         
-        return service.AlterSpeciality(id, dto);
-        
+        return ResponseEntity.ok(service.AlterSpeciality(id, dto));
+ 
     }
     
     @DeleteMapping("/{id}")
@@ -56,12 +56,13 @@ public class TecnicoController {
         
     }
     
-    @PostMapping("/status/{id}")
-    public ResponseDTO AlterStatusTecnico(
+    @PatchMapping("/status/{id}")
+    public ResponseEntity<?> AlterStatusTecnico(
             @PathVariable int id,
-            @RequestBody String status){
+            @Valid @RequestBody TecnicoEntityDTO dto){
         
-        return service.AlterStatusTecnico(id, status);
+        
+        return ResponseEntity.ok(service.AlterStatusTecnico(id, dto));
         
     }
     

@@ -6,7 +6,8 @@ package com.mycompany.support.it.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import org.openapitools.jackson.nullable.JsonNullable;
+
 
 
 /**
@@ -18,35 +19,35 @@ public class TecnicoEntityDTO {
    
   
     @NotBlank(message = "É necessário inserir o nome")
-    private String nome;
+    private JsonNullable<String> nome = JsonNullable.undefined();
     
     @NotBlank(message = "É necessário inserir o email")
     @Email(message = "Email inválido")
-    private String email;
+    private JsonNullable<String> email = JsonNullable.undefined();
    
     @NotBlank(message = "É necessário inserir a especialidade")
-    private String especialidade;
+    private JsonNullable<String> especialidade = JsonNullable.undefined();
         
     private String status;
     
-    public String getNome(){
+    public JsonNullable<String> getNome(){
         return nome;
     }
-    public void setNome(String nome){
+    public void setNome(JsonNullable<String> nome){
         this.nome = nome;
     }
     
-    public String getEmail(){
+    public JsonNullable<String> getEmail(){
         return email;
     }
-    public void setEmail(String email){
+    public void setEmail(JsonNullable<String> email){
         this.email = email;
     }
     
-    public String getEspecialidade(){
+    public JsonNullable<String> getEspecialidade(){
         return especialidade;
     }
-    public void setEspecialidade(String especialidade){
+    public void setEspecialidade(JsonNullable<String> especialidade){
         this.especialidade = especialidade;
     }
     

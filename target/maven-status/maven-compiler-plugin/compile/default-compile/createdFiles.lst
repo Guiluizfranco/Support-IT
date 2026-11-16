@@ -14,6 +14,7 @@ com\mycompany\support\it\repository\UserRepository.class
 com\mycompany\support\it\repository\TecnicoRepository.class
 com\mycompany\support\it\controller\CommentController.class
 com\mycompany\support\it\service\CallService.class
+com\mycompany\support\it\config\JacksonConfig.class
 com\mycompany\support\it\controller\CallController.class
 com\mycompany\support\it\entity\CommentEntity.class
 com\mycompany\support\it\service\UserService.class

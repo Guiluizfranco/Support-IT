@@ -10,8 +10,8 @@ import com.mycompany.support.it.entity.CallEntity;
 import com.mycompany.support.it.entity.TecnicoEntity;
 import com.mycompany.support.it.repository.CallRepository;
 import com.mycompany.support.it.repository.TecnicoRepository;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,9 +35,9 @@ public class TecnicoService {
         
         TecnicoEntity tecnico = new TecnicoEntity();
         
-        tecnico.setNome(dto.getNome()); 
-        tecnico.setEmail(dto.getEmail());
-        tecnico.setEspecialidade(dto.getEspecialidade());
+        tecnico.setNome(dto.getNome().get()); 
+        tecnico.setEmail(dto.getEmail().get());
+        tecnico.setEspecialidade(dto.getEspecialidade().get());
         tecnico.setAtivo(true);
         
         tecnicoRepository.save(tecnico);
@@ -49,14 +49,32 @@ public class TecnicoService {
           
    public ResponseDTO AlterSpeciality (int id, TecnicoEntityDTO dto){
        
-       TecnicoEntity tecnico = tecnicoRepository.findById(id).get();
+       TecnicoEntity tecnico = tecnicoRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Técnico informado não existe"));
        
-       tecnico.setEspecialidade(dto.getEspecialidade());
-       
-       tecnicoRepository.save(tecnico);
-       
-       response.setMessage("Especialidade alterada com sucesso");
-       
+       if(tecnico.getAtivo()){
+           if(dto.getEspecialidade().isPresent()){
+               
+               String novaEspecialidade = dto.getEspecialidade().get();
+               
+               if(novaEspecialidade.equals(tecnico.getEspecialidade()) && novaEspecialidade != null){
+                   response.setMessage("Especialidade já atribuída ao técnico");
+                   return response;
+                   
+               }
+               
+               dto.getNome().ifPresent(tecnico::setNome);
+               dto.getEmail().ifPresent(tecnico::setEmail);
+               dto.getEspecialidade().ifPresent(tecnico::setEspecialidade);
+               tecnicoRepository.save(tecnico);
+               response.setMessage("Técnico alterado com sucesso");
+           }
+             
+       }else{
+           
+         response.setMessage("Técnico se encontra inativo");
+           
+       }
+ 
        return response;
        
    }
@@ -65,7 +83,7 @@ public class TecnicoService {
        
        int i;
        
-       TecnicoEntity tecnico = tecnicoRepository.findById(id).get();
+       TecnicoEntity tecnico = tecnicoRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Técnico informado não existe"));
        CallEntity chamado;
        List<CallEntity> listaChamado = callRepository.findAllByTecnico(tecnico);
        
@@ -91,14 +109,55 @@ public class TecnicoService {
        
    }
    
-   public ResponseDTO AlterStatusTecnico(int id, String status){
+   public ResponseDTO AlterStatusTecnico(int id, TecnicoEntityDTO dto){
        
-       TecnicoEntity tecnico = tecnicoRepository.findById(id).get();
+       TecnicoEntity tecnico = tecnicoRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Técnico informado não existe"));
        
-       tecnico.setAtivo(!tecnico.getAtivo());
-       tecnicoRepository.save(tecnico);
+       dto.getNome().ifPresent(tecnico::setNome);
+       dto.getEmail().ifPresent(tecnico::setEmail);
+       dto.getEspecialidade().ifPresent(tecnico::setEspecialidade);
        
-       response.setMessage("Status alterado com sucesso.");
+        switch(dto.getStatus().toLowerCase()){
+           
+           case "ativo":
+               
+               if(tecnico.getAtivo()){
+                   
+                   response.setMessage("Técnico já se encontra ativo");
+                   
+               }else{
+
+                   tecnico.setAtivo(!tecnico.getAtivo());
+                   
+                   tecnicoRepository.save(tecnico);
+                   
+                   response.setMessage("Status alterado com sucesso!");
+                   
+               }
+               break;
+               
+           case "inativo":      
+               
+               if(tecnico.getAtivo()){
+
+                   tecnico.setAtivo(!tecnico.getAtivo());
+                   
+                   tecnicoRepository.save(tecnico);
+                   
+                   response.setMessage("Status alterado com sucesso!");
+  
+               }else{
+                   response.setMessage("Técnico já se encontra inativo");
+ 
+               }
+               break;
+               
+           default:
+               
+               response.setMessage("Não foi possivel alterar o status. Insira um valor válido (Ativo / Inativo)");
+               
+       }
+               
        return response;
        
        
