@@ -8,7 +8,10 @@ import com.mycompany.support.it.entity.CallEntity;
 import com.mycompany.support.it.entity.TecnicoEntity;
 import com.mycompany.support.it.entity.UserEntity;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+
 
 /**
  *
@@ -16,7 +19,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CallRepository extends JpaRepository<CallEntity, Integer>{
     
-    List<CallEntity> findAllByUser(UserEntity user);
-    List<CallEntity> findAllByStatus(String status);
+    Page<CallEntity> findAllByUser(UserEntity user, Pageable pageable);
+    Page<CallEntity> findAllByStatus(String status, Pageable pageable);
+    Page<CallEntity> findAllByTecnico(TecnicoEntity tecnico, Pageable pageable);
+    Page<CallEntity> findAll(Pageable pageable);
+    
     List<CallEntity> findAllByTecnico(TecnicoEntity tecnico);
+    
 }

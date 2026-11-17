@@ -4,16 +4,29 @@
  */
 package com.mycompany.support.it.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 /**
  *
  * @author guil_dev
  */
 public class UserEntityDTO {
     
+    @NotBlank(message = "É necessário inserir o nome.")
     protected String nome;
+    
+    @NotBlank(message = "É necessário inserir o usuario.")
     protected String usuario;
+    
+    @NotBlank(message = "É necessário inserir o email.")
+    @Email
     protected String email;
+    
+    @NotBlank(message = "É necessário inserir a senha.")
     protected String senha;
+    
+    @NotBlank(message = "É necessário inserir o departamento.")
     protected String departamento;
     
      public String getNome(){

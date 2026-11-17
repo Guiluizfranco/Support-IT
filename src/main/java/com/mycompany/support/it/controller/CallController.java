@@ -10,6 +10,7 @@ import com.mycompany.support.it.entity.CallEntity;
 import com.mycompany.support.it.service.CallService;
 import jakarta.validation.Valid;
 import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -59,17 +60,28 @@ public class CallController {
     
     
     @GetMapping
-    public List<CallEntity> GetAllCalls(){
-        return service.GetAllCall();
+    public Page<CallEntity> GetAllCalls(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+        
+        return service.GetAllCall(page, size);
     }
     
     @GetMapping("/{id}")
-    public List<CallEntity> GetAllUserCalls(@PathVariable Integer id){
-        return service.GetAllUserCalls(id);
+    public Page<CallEntity> GetAllUserCalls(
+            @PathVariable Integer id,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+        
+        return service.GetAllUserCalls(id, page, size);
     }
     
     @GetMapping("/search")
-    public List<CallEntity> GetAllStatusCalls(@RequestParam String status){
-        return service.GetAllStatusCalls(status);
+    public Page<CallEntity> GetAllStatusCalls(
+            @RequestParam String status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+        
+        return service.GetAllStatusCalls(status, page, size);
     }
 }

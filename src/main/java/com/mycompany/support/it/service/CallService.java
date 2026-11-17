@@ -17,6 +17,9 @@ import com.mycompany.support.it.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -162,29 +165,34 @@ public class CallService {
         
     }
     
-    public List<CallEntity> GetAllCall(){
+    public Page<CallEntity> GetAllCall(int page, int size){
         
-        return callRepository.findAll();
+        Pageable pageable = PageRequest.of(page, size);
+        
+        return callRepository.findAll(pageable);
   
     }
     
-    public List<CallEntity> GetAllUserCalls(Integer id){
+    public Page<CallEntity> GetAllUserCalls(Integer id, int page, int size){
         
         UserEntity user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado"));
+        Pageable pageable = PageRequest.of(page, size);
         
-        return callRepository.findAllByUser(user);
+        return callRepository.findAllByUser(user, pageable);
         
     }
     
-    public List<CallEntity> GetAllStatusCalls(String status){
+    public Page<CallEntity> GetAllStatusCalls(String status, int page, int size){
 
-        if(!status.toLowerCase().equals("aberto") || !status.toLowerCase().equals("fechado") || !status.toLowerCase().equals("em andamento")){
+        if(!status.toLowerCase().equals("aberto") && !status.toLowerCase().equals("fechado") && !status.toLowerCase().equals("em andamento")){
             
-            throw new Error("Status inválido!");
+            throw new IllegalArgumentException("Status inválido!");
             
         }else{
             
-            return callRepository.findAllByStatus(status);
+            Pageable pageable = PageRequest.of(page, size);
+            
+            return callRepository.findAllByStatus(status, pageable);
             
         }
                 

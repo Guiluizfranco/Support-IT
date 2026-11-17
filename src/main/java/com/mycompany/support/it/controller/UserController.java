@@ -8,9 +8,12 @@ import com.mycompany.support.it.dto.ResponseDTO;
 import com.mycompany.support.it.dto.UserEntityDTO;
 import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.service.UserService;
+import jakarta.validation.Valid;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,8 +37,9 @@ public class UserController {
     }
    
    @PostMapping 
-   public ResponseDTO CreateUser(@RequestBody UserEntityDTO dto){
-       return service.CreateUser(dto);
+   public ResponseEntity<?> CreateUser(@Valid @RequestBody UserEntityDTO dto){
+       
+       return ResponseEntity.ok(service.CreateUser(dto));
    }
    
    @GetMapping("/{id}")
@@ -58,7 +62,7 @@ public class UserController {
        
    }
    
-   @PutMapping("/{id}")
+   @PatchMapping("/{id}")
    public ResponseDTO UpdateUserById(
            @RequestBody UserEntityDTO dto,
            @PathVariable Integer id){
@@ -67,7 +71,7 @@ public class UserController {
        
    }
    
-   @PutMapping("/update")
+   @PatchMapping("/update")
    public ResponseDTO UpdateUserByUsuario(
            @RequestParam String usuario,
            @RequestBody UserEntityDTO dto){

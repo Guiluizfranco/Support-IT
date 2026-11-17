@@ -10,6 +10,7 @@ import com.mycompany.support.it.entity.UserEntity;
 import com.mycompany.support.it.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,11 +20,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     
-    private final UserRepository repository;
+    private final UserRepository userRepostiory;
     ResponseDTO response = new ResponseDTO();
     
-    public UserService(UserRepository repostiory){
-        this.repository = repostiory;
+    public UserService(UserRepository userRepostiory){
+        this.userRepostiory = userRepostiory;
     }
     
     public ResponseDTO CreateUser(UserEntityDTO dto){
@@ -36,7 +37,7 @@ public class UserService {
         user.setSenha(dto.getSenha());
         user.setDepartamento(dto.getDepartamento());
         
-        repository.save(user);
+        userRepostiory.save(user);
         
         response.setMessage("Usuário cadastrado com sucesso");
         
@@ -46,30 +47,26 @@ public class UserService {
     
     public UserEntity FindUserById(Integer id){
         
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        return userRepostiory.findById(id).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado"));
         
     }
     
     public UserEntity FindUserByUsuario(String usuario){
         
-        return repository.findByUsuario(usuario).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        return userRepostiory.findByUsuario(usuario).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado"));
         
     }
     
     public List<UserEntity> FindAllUsers(){
         
-        return repository.findAll();
+        return userRepostiory.findAll();
         
     }
     
     @Transactional
     public ResponseDTO UpdateUserById(Integer id, UserEntityDTO dto){
         
-        if (FindUserById(id).equals("Usuário não encontrado")){
-            
-            response.setMessage("Usuário não encontrado!");
-            
-        }else{
+           userRepostiory.findById(id).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado")); 
             
             UserEntity user = new UserEntity();
             
@@ -80,24 +77,18 @@ public class UserService {
             user.setSenha(dto.getSenha());
             user.setDepartamento(dto.getDepartamento());
             
-            repository.save(user);
+            userRepostiory.save(user);
             
             response.setMessage("Usuário atualizado com sucesso!");
-            
-        }
-        
-        return response;
-    }
+
+            return response;
+    } 
     
     @Transactional
     public ResponseDTO UpdateUserByUsuario(String usuario, UserEntityDTO dto){
         
-        if(FindUserByUsuario(usuario).equals("Usuário não encontrado")){
-         
-            response.setMessage("Usuário não encontrado");
-            
-        }else{
-            
+           userRepostiory.findByUsuario(usuario).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado"));
+  
             UserEntity user = new UserEntity();
             
             user.setId(FindUserByUsuario(usuario).getId());
@@ -107,30 +98,23 @@ public class UserService {
             user.setSenha(dto.getSenha());
             user.setDepartamento(dto.getDepartamento());
             
-            repository.save(user);
+            userRepostiory.save(user);
             
             response.setMessage("Usuário atualizado");
-            
-        }
-        
-        return response;
+ 
+           return response;
         
     }
     
     public ResponseDTO DeleteUserById(Integer id){
         
-        if(FindUserById(id).equals("Usuario não encontrado")){
+        userRepostiory.findById(id).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado")); 
             
-            response.setMessage("Usuário não encontrado");
             
-        }else{
+        userRepostiory.deleteById(id);
             
-            repository.deleteById(id);
-            
-            response.setMessage("Usuário deletado com sucesso");
-            
-        }
-        
+        response.setMessage("Usuário deletado com sucesso");
+  
         return response;
         
     }
