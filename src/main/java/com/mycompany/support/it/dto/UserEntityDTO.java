@@ -6,6 +6,7 @@ package com.mycompany.support.it.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 /**
  *
@@ -14,53 +15,53 @@ import jakarta.validation.constraints.NotBlank;
 public class UserEntityDTO {
     
     @NotBlank(message = "É necessário inserir o nome.")
-    protected String nome;
+    protected JsonNullable<String> nome = JsonNullable.undefined();
     
     @NotBlank(message = "É necessário inserir o usuario.")
-    protected String usuario;
+    protected JsonNullable<String> usuario = JsonNullable.undefined();;
     
     @NotBlank(message = "É necessário inserir o email.")
     @Email
-    protected String email;
+    protected JsonNullable<String> email = JsonNullable.undefined();;
     
     @NotBlank(message = "É necessário inserir a senha.")
-    protected String senha;
+    protected JsonNullable<String> senha = JsonNullable.undefined();;
     
     @NotBlank(message = "É necessário inserir o departamento.")
-    protected String departamento;
+    protected JsonNullable<String> departamento = JsonNullable.undefined();;
     
-     public String getNome(){
+     public JsonNullable<String> getNome(){
         return nome;
     }
-    public void setNome(String nome){
+    public void setNome(JsonNullable<String> nome){
         this.nome = nome;
     }
     
-    public String getUsuario(){
+    public JsonNullable<String> getUsuario(){
         return usuario;
     }
-    public void setUsuario(String usuario){
+    public void setUsuario(JsonNullable<String> usuario){
         this.usuario = usuario;
     }
     
-    public String getEmail(){
+    public JsonNullable<String> getEmail(){
         return email;
     }
-    public void setEmail(String email){
+    public void setEmail(JsonNullable<String> email){
         this.email = email;
     }
     
-    public String getSenha(){
+    public JsonNullable<String> getSenha(){
         return senha;
     }
-    public void setSenha(String senha){
+    public void setSenha(JsonNullable<String> senha){
         this.senha = senha;
     }
     
-    public String getDepartamento(){
+    public JsonNullable<String> getDepartamento(){
         return departamento;
     }
-    public void setDepartamento(String departamento){
+    public void setDepartamento(JsonNullable<String> departamento){
         this.departamento = departamento;
     }
     

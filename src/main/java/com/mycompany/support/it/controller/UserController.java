@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,16 +41,16 @@ public class UserController {
        return ResponseEntity.ok(service.CreateUser(dto));
    }
    
-   @GetMapping("/{id}")
-   public UserEntity FindUserById(@PathVariable Integer id){
+   @GetMapping("/id/{id}")
+   public UserEntityDTO FindUserById(@PathVariable Integer id){
        return service.FindUserById(id);
    }
    
-   @GetMapping("/search")
-   public UserEntity FindUserByUsuario(
-           @RequestParam(required=false) String usuario){
+   @GetMapping("/user/{userName}")
+   public UserEntityDTO FindUserByUsuario(
+           @PathVariable String userName){
        
-       return service.FindUserByUsuario(usuario);
+       return service.FindUserByUsuario(userName);
        
    }
    
@@ -62,21 +61,21 @@ public class UserController {
        
    }
    
-   @PatchMapping("/{id}")
+   @PatchMapping("/id")
    public ResponseDTO UpdateUserById(
            @RequestBody UserEntityDTO dto,
-           @PathVariable Integer id){
+           @RequestParam Integer id){
        
        return service.UpdateUserById(id, dto);
        
    }
    
-   @PatchMapping("/update")
+   @PatchMapping("/userName")
    public ResponseDTO UpdateUserByUsuario(
-           @RequestParam String usuario,
-           @RequestBody UserEntityDTO dto){
+           @RequestBody UserEntityDTO dto,
+           @RequestParam String userName){
        
-      return service.UpdateUserByUsuario(usuario, dto);
+      return service.UpdateUserByUsuario(userName, dto);
        
    }
    

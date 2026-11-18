@@ -11,7 +11,10 @@ import com.mycompany.support.it.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
+import org.openapitools.jackson.nullable.JsonNullable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 /**
  *
@@ -27,15 +30,20 @@ public class UserService {
         this.userRepostiory = userRepostiory;
     }
     
+    BCryptPasswordEncoder  encoder = new BCryptPasswordEncoder (16);
+    
     public ResponseDTO CreateUser(UserEntityDTO dto){
-        
+
         UserEntity user = new UserEntity();
         
-        user.setNome(dto.getNome());
-        user.setUsuario(dto.getNome());
-        user.setEmail(dto.getEmail());
-        user.setSenha(dto.getSenha());
-        user.setDepartamento(dto.getDepartamento());
+        user.setNome(dto.getNome().get());
+        user.setUsuario(dto.getUsuario().get());
+        user.setEmail(dto.getEmail().get());
+        
+        String senha = encoder.encode(dto.getSenha().get());
+        user.setSenha(senha);
+        
+        user.setDepartamento(dto.getDepartamento().get());
         
         userRepostiory.save(user);
         
@@ -45,16 +53,31 @@ public class UserService {
         
     }
     
-    public UserEntity FindUserById(Integer id){
-        
-        return userRepostiory.findById(id).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado"));
+    public UserEntityDTO FindUserById(Integer id){
+         
+         UserEntity user = userRepostiory.findById(id).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado"));
+         UserEntityDTO dto = new UserEntityDTO();
+         
+         dto.setNome(JsonNullable.of(user.getNome()));
+         dto.setUsuario(JsonNullable.of(user.getUsuario()));
+         dto.setEmail(JsonNullable.of(user.getEmail()));
+         dto.setDepartamento(JsonNullable.of(user.getDepartamento()));
+         
+         return dto;
         
     }
     
-    public UserEntity FindUserByUsuario(String usuario){
+    public UserEntityDTO FindUserByUsuario(String userName){
         
-        return userRepostiory.findByUsuario(usuario).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado"));
+        UserEntity user = userRepostiory.findByUsuario(userName).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado"));
+        UserEntityDTO dto = new UserEntityDTO();
         
+         dto.setNome(JsonNullable.of(user.getNome()));
+         dto.setUsuario(JsonNullable.of(user.getUsuario()));
+         dto.setEmail(JsonNullable.of(user.getEmail()));
+         dto.setDepartamento(JsonNullable.of(user.getDepartamento()));
+         
+         return dto;
     }
     
     public List<UserEntity> FindAllUsers(){
@@ -65,17 +88,14 @@ public class UserService {
     
     @Transactional
     public ResponseDTO UpdateUserById(Integer id, UserEntityDTO dto){
-        
-           userRepostiory.findById(id).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado")); 
+  
+            UserEntity user = userRepostiory.findById(id).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado")); 
             
-            UserEntity user = new UserEntity();
-            
-            user.setId(id);
-            user.setNome(dto.getNome());
-            user.setUsuario(dto.getUsuario());
-            user.setEmail(dto.getEmail());
-            user.setSenha(dto.getSenha());
-            user.setDepartamento(dto.getDepartamento());
+            dto.getNome().ifPresent(user::setNome);
+            dto.getUsuario().ifPresent(user::setUsuario);
+            dto.getEmail().ifPresent(user::setEmail);
+            dto.getSenha().ifPresent(user::setSenha);
+            dto.getDepartamento().ifPresent(user::setDepartamento);
             
             userRepostiory.save(user);
             
@@ -85,18 +105,16 @@ public class UserService {
     } 
     
     @Transactional
-    public ResponseDTO UpdateUserByUsuario(String usuario, UserEntityDTO dto){
-        
-           userRepostiory.findByUsuario(usuario).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado"));
-  
-            UserEntity user = new UserEntity();
+    public ResponseDTO UpdateUserByUsuario(String userName, UserEntityDTO dto){
+
+            UserEntity user = userRepostiory.findByUsuario(userName).orElseThrow(() -> new NoSuchElementException("Usuário não encontrado"));
             
-            user.setId(FindUserByUsuario(usuario).getId());
-            user.setNome(dto.getNome());
-            user.setUsuario(dto.getUsuario());
-            user.setEmail(dto.getEmail());
-            user.setSenha(dto.getSenha());
-            user.setDepartamento(dto.getDepartamento());
+            
+            dto.getNome().ifPresent(user::setNome);
+            dto.getUsuario().ifPresent(user::setUsuario);
+            dto.getEmail().ifPresent(user::setEmail);
+            dto.getSenha().ifPresent(user::setSenha);
+            dto.getDepartamento().ifPresent(user::setDepartamento);
             
             userRepostiory.save(user);
             

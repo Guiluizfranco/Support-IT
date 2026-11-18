@@ -15,7 +15,6 @@ import com.mycompany.support.it.repository.CategoryRepository;
 import com.mycompany.support.it.repository.TecnicoRepository;
 import com.mycompany.support.it.repository.UserRepository;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
